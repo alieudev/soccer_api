@@ -10,6 +10,11 @@ class ApplicationController < Sinatra::Base
     Player.all.to_json
   end
 
+  get '/players/:id' do
+    player = Player.find(params[:id])
+    player.to_json
+  end
+  
   delete '/players/:id' do
     player = Player.find(params[:id])
     player.destroy
@@ -29,13 +34,20 @@ class ApplicationController < Sinatra::Base
   end
 
   patch '/players/:id' do
-    player = Player.update(
-      name: params[:name],
-      height: params[:height],
-      weight: params[:weight],
-      foot: params[:foot],
-      rating: params[:rating],
-    )
-    player.to_json
+      player = Player.find(params[:id])
+      player.update(player_params)
+      player.to_json
   end
+
+  private 
+
+  # a method used to specify which keys are allowed through params into the controller
+  # we use this method to create a list of what's permitted to be passed to .create or .update
+  # within controller actions.
+
+  def player_params
+    allowed_params = %w(name height weight foot rating)
+    params.select {|param,value| allowed_params.include?(param)}
+  end
+
 end
