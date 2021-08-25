@@ -33,6 +33,8 @@ import time
 # print(players)
 
 # player
+# Get image
+list_of_all_players = []
 player = requests.get(
     'https://www.worldfootball.net/player_summary/eldin-jakupovic/').text
 soup = BeautifulSoup(player, 'html.parser')
