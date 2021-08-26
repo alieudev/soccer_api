@@ -28,6 +28,7 @@ class ApplicationController < Sinatra::Base
       weight: params[:weight],
       foot: params[:foot],
       rating: params[:rating],
+      image: params[:imageUrl],
       team_id: params[:team_id]
     )
     player.to_json
@@ -46,7 +47,7 @@ class ApplicationController < Sinatra::Base
   # within controller actions.
 
   def player_params
-    allowed_params = %w(name height weight foot rating)
+    allowed_params = %w(name height weight foot rating imageUrl)
     params.select {|param,value| allowed_params.include?(param)}
   end
 
